@@ -8,12 +8,28 @@ const startPage = document.getElementById("startPage");
 const loginPage = document.getElementById("loginPage");
 const userPage = document.getElementById("userPage");
 
+//************************ btLogIn  ************************
 const btnLogIn = document.getElementById("btnLogIn");
 // console.log(btnLogIn);
-
 btnLogIn.addEventListener("click", function (){
     console.log("klick btnLogIn");
+    main.innerHTML = `        
+    <section id="loginPage">
+        <h2>Logga in</h2> 
+        <p>Användarnamn<p>
+        <input id="inputField" type="text" placeholder="Användarnamn"> 
+        <p>Lösenord</p>
+        <input type="text" placeholder="Lösenord"> 
+        <button id="btnSend">Skicka</button>
+        <div id="errorMess">Error</div>
+    </section>`;
 });
+
+
+
+
+
+
 
 //dynamiskt kunna byta ut alt lägga till/ta bort li i menyn
 //dynamiskt kunna byta ut h2 och p i main
