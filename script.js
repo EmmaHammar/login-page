@@ -11,10 +11,13 @@ const userPage = document.getElementById("userPage");
 //************************ btLogIn  ************************
 const btnLogIn = document.getElementById("btnLogIn");
 // console.log(btnLogIn);
-
-let userNames = ["Janne"];
+//************************ Janne to local storage  
+let userNames = ["janne"];
 // console.log(userNames[0]);
 localStorage.setItem("userName", userNames[0]);
+
+//************************ check if userName exists  
+let userNameExist = false; //userName finns ej innan vi har börjat leta
 
 btnLogIn.addEventListener("click", function (){
     console.log("klick btnLogIn");
@@ -29,17 +32,32 @@ btnLogIn.addEventListener("click", function (){
         <div id="errorMess">Error</div>
     </section>`;
 
+    
     btnSend.addEventListener("click", function () {
-        const inputField = document.getElementById("inputField");
+        let inputUserName = document.getElementById("inputField").value;
+        console.log(inputField.value);
         const btnSend = document.getElementById("btnSend");
+        
 
-    //     for (i=0; i < agents.length; i++) {
-        
-    //     // console.log(inputField.value);
-        
+        for (i=0; i < userNames.length; i++) {
+            console.log(userNames[i]);
+            if (inputUserName == userNames[i]) {
+                userNameExist = true;
+                console.log("visa inloggade vyn");
+            }
+
+            else {
+                console.log("error");
+            }
+            
+            // if (inputUserName == (userNames[i]) {
+            // userNameOk = true;
+            // console.log("komma till inloggade vyn");
+            // }
+        }
+
     });
 });
-
 
 //Grunden
 //1) localStorage.setItem("userName", "Janne");
