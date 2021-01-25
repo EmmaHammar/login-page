@@ -9,7 +9,13 @@ const loginPage = document.getElementById("loginPage");
 const userPage = document.getElementById("userPage");
 
 //************************ btLogIn  ************************
-const btnLogIn = document.getElementById("btnLogIn");
+const li = document.createElement("LI");
+ul.appendChild(li);
+li.insertAdjacentHTML("afterbegin", `<button id="btnLogIn">Logga in</button>`)
+console.log(ul);
+
+// const btnLogIn = document.getElementById("btnLogIn");
+{/* <li><button id="btnLogIn">Logga in</button></li> */}
 // console.log(btnLogIn);
 //************************ Janne to local storage  
 let userNames = ["janne"];
@@ -31,7 +37,7 @@ btnLogIn.addEventListener("click", function (){
         <button id="btnSend">Skicka</button>
         <div id="errorMess">Error</div>
     </section>`;
-
+   
     
     btnSend.addEventListener("click", function () {
         let inputUserName = document.getElementById("inputField").value;
@@ -44,6 +50,12 @@ btnLogIn.addEventListener("click", function (){
             if (inputUserName == userNames[i]) {
                 userNameExist = true;
                 console.log("visa inloggade vyn");
+                main.innerHTML = `
+                    <section id="userPage">
+                        <h2>Välkommen till din personliga sida!</h2> 
+                        <p>Här kan du se dina grejer.</p>
+                    </section>`;
+                ul.innerHTML = `<li><button id="btnLogOut">Logga ut</button></li>`;
             }
 
             else {
