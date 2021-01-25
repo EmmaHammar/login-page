@@ -1,0 +1,29 @@
+$padding-2rem: 2rem;
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #aab4b699;
+    ul {
+        list-style: none;
+    }
+}
+
+main {
+    padding: $padding-2rem;
+    p {
+        max-width: 25rem;
+    }
+}
+
+footer {
+    background: #BFBC8A;
+    padding: $padding-2rem;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+
