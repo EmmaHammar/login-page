@@ -18,7 +18,7 @@ let userNames = ["janne"];
 // console.log(userNames[0]);
 localStorage.setItem("userName", userNames[0]);
 
-//************************ check if userName exists  
+//************************ check if userName exists  1/2
 let userNameExist = false; //userName finns ej innan vi har börjat leta
 
 btnLogIn.addEventListener("click", function (){
@@ -31,7 +31,7 @@ btnLogIn.addEventListener("click", function (){
         <p>Lösenord</p>
         <input type="text" placeholder="Lösenord"> 
         <button id="btnSend">Skicka</button>
-        <div id="errorMess">Error</div>
+        <div id="errorMess"></div>
     </section>`;
    
     
@@ -40,7 +40,7 @@ btnLogIn.addEventListener("click", function (){
         console.log(inputField.value);
         const btnSend = document.getElementById("btnSend");
         
-
+        //************************ check if userName exists  2/2
         for (i=0; i < userNames.length; i++) {
             console.log(userNames[i]);
             if (inputUserName == userNames[i]) {
@@ -55,13 +55,9 @@ btnLogIn.addEventListener("click", function (){
             }
 
             else {
-                console.log("error");
+                let errorMess = document.getElementById("errorMess");
+                errorMess.insertAdjacentHTML("afterbegin", "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.");
             }
-            
-            // if (inputUserName == (userNames[i]) {
-            // userNameOk = true;
-            // console.log("komma till inloggade vyn");
-            // }
         }
 
     });
