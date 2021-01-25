@@ -12,11 +12,7 @@ const userPage = document.getElementById("userPage");
 const li = document.createElement("LI");
 ul.appendChild(li);
 li.insertAdjacentHTML("afterbegin", `<button id="btnLogIn">Logga in</button>`)
-console.log(ul);
-
-// const btnLogIn = document.getElementById("btnLogIn");
-{/* <li><button id="btnLogIn">Logga in</button></li> */}
-// console.log(btnLogIn);
+// console.log(ul);
 //************************ Janne to local storage  
 let userNames = ["janne"];
 // console.log(userNames[0]);
@@ -55,7 +51,7 @@ btnLogIn.addEventListener("click", function (){
                         <h2>Välkommen till din personliga sida!</h2> 
                         <p>Här kan du se dina grejer.</p>
                     </section>`;
-                ul.innerHTML = `<li><button id="btnLogOut">Logga ut</button></li>`;
+                li.innerHTML = `<button id="btnLogOut">Logga ut</button>`;
             }
 
             else {
