@@ -8,11 +8,13 @@ const startPage = document.getElementById("startPage");
 const loginPage = document.getElementById("loginPage");
 const userPage = document.getElementById("userPage");
 
-//************************ btLogIn  ************************
+//************************ HEADER - btLogIn **********************
 const li = document.createElement("LI");
 ul.appendChild(li);
 li.insertAdjacentHTML("afterbegin", `<button id="btnLogIn">Logga in</button>`)
 // console.log(ul);
+
+
 //************************ Janne to local storage  
 // let userNames = ["janne"];
 // // console.log(userNames[0]);
@@ -40,17 +42,17 @@ btnLogIn.addEventListener("click", function (){
     <section id="loginPage">
         <h2>Logga in</h2> 
         <p>Användarnamn<p>
-        <input id="inputField" type="text" placeholder="Användarnamn"> 
+        <input id="inputFieldName" type="text" placeholder="Användarnamn"> 
         <p>Lösenord</p>
-        <input type="text" placeholder="Lösenord"> 
+        <input id="inputFieldPassword" type="text" placeholder="Lösenord"> 
         <button id="btnSend">Skicka</button>
         <div id="errorMess"></div>
     </section>`;
    
     
     btnSend.addEventListener("click", function () {
-        let inputUserName = document.getElementById("inputField").value;
-        console.log(inputField.value);
+        let inputUserName = document.getElementById("inputFieldName").value;
+        console.log(inputFieldName.value);
         const btnSend = document.getElementById("btnSend");
         
         //************************ check if userName exists  2/2
@@ -61,6 +63,7 @@ btnLogIn.addEventListener("click", function (){
 
         for (i=0; i < userList.length; i++) {
             console.log(userList[0].password);
+
             if (inputUserName == userList[0].userName && userList[0].password) {
                 userNameExist = true;
                 console.log("visa inloggade vyn");
@@ -70,17 +73,41 @@ btnLogIn.addEventListener("click", function (){
                         <p>Här kan du se dina grejer.</p>
                     </section>`;
                 li.innerHTML = `<button id="btnLogOut">Logga ut</button>`;
-                //OBS fixa så det inte kommer felmeddelande varje gång knapptryckning
+                
+                let btnLogOut = document.getElementById("btnLogOut");
+                btnLogOut.addEventListener("click", function () {
+                    console.log("klick logga ut");
+                    main.innerHTML = `  
+                    <section id="startPage">
+                        <h2>Välkommen!</h2>
+                        <p>Logga in i menyn för att se din personliga sida.</p>
+                  </section>`;
+                });
             }
 
             else {
                 let errorMess = document.getElementById("errorMess");
-                errorMess.insertAdjacentHTML("afterbegin", "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.");
+                errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
             }
+            
         }
+        inputFieldName.value = "";
+        inputFieldPassword.value = "";
 
     });
 });
+
+//FRÅGOR: 
+// 1) Innehålls -vyn skall dynamiskt växla mellan tre olika lägen. Tips?
+// 2) Inloggning sparas i localStorage. (10p) Vad menas med det?
+
+
+
+
+
+
+
+
 
 //Grunden
 //1) localStorage.setItem("userName", "Janne");
@@ -88,7 +115,6 @@ btnLogIn.addEventListener("click", function (){
 //2)Kunna se Janne i loggen
 //2a) let userName = localStorage.getItem("userName", "Janne");
 //2b) console.log(userName);
-
 
 //******** local storage createNewUser ********
 // let inputUserName = inputField.value;
@@ -108,31 +134,6 @@ btnLogIn.addEventListener("click", function (){
 
 // localStorage.setItem("userNameList", JSON.stringify(userNameList));
 //******** /local storage createNewUser ********
-
-
-
-
-
-
-
-
-//dynamiskt kunna byta ut alt lägga till/ta bort li i menyn
-//dynamiskt kunna byta ut h2 och p i main
-
-//När du trycker på logga in-knappen i menyfältet syns: 
-    //logga in-vy: inputfält, knapp, plats för error. Göra en container som syns i vissa läge? 
-    //När du trycker på logga in-knappen i main: testar den om användarnamnet/lösen finns -> ja: inloggad vy, nej: error
-
-
-//Inloggad vy: 
-    //meny: logga ut syns (istället för logga in)
-    //h2 och p ändrat
-
-
-
-
-
-
 
 
 //NÄR KLAR MED OVAN
