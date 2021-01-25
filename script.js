@@ -12,7 +12,9 @@ const userPage = document.getElementById("userPage");
 const btnLogIn = document.getElementById("btnLogIn");
 // console.log(btnLogIn);
 
-
+let userNames = ["Janne"];
+// console.log(userNames[0]);
+localStorage.setItem("userName", userNames[0]);
 
 btnLogIn.addEventListener("click", function (){
     console.log("klick btnLogIn");
@@ -31,23 +33,12 @@ btnLogIn.addEventListener("click", function (){
         const inputField = document.getElementById("inputField");
         const btnSend = document.getElementById("btnSend");
 
-        // console.log(inputField.value);
-        let inputUserName = inputField.value;
-
-        let users = [
-            {"userName": "Janne"},
-            {"userName": inputUserName}
-        ];
-        console.log(users);
-
+    //     for (i=0; i < agents.length; i++) {
+        
+    //     // console.log(inputField.value);
         
     });
 });
-
-
-
-
-
 
 
 //Grunden
@@ -56,6 +47,23 @@ btnLogIn.addEventListener("click", function (){
 //2)Kunna se Janne i loggen
 //2a) let userName = localStorage.getItem("userName", "Janne");
 //2b) console.log(userName);
+
+
+//******** local storage createNewUser ********
+// let inputUserName = inputField.value;
+//         let allUserNames = [
+//             {"userName": "Janne"},
+//             // {"userName": inputUserName}
+//         ];
+//         console.log(allUserNames);
+//         localStorage.setItem("allUserNames", JSON.stringify(allUserNames));
+//ELLER
+// let userNameList = [ 
+//     {userName: "James"}
+// ];
+// localStorage.setItem("userNameList", JSON.stringify(userNameList));
+//******** /local storage createNewUser ********
+
 
 
 
@@ -84,4 +92,4 @@ btnLogIn.addEventListener("click", function (){
 
 //NÄR KLAR MED OVAN
 //(ev första gången du logga in - fält)
-//i inloggad vy ser du ex Hej Emma. 
+//i inloggad vy ser du ex Hej Emma
