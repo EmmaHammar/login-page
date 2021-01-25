@@ -1,4 +1,3 @@
-console.log("hej");
 //koppling DOMen och variabler
 const header = document.getElementsByTagName("HEADER")[0];
 const ul = document.createElement("UL");
@@ -9,7 +8,12 @@ const startPage = document.getElementById("startPage");
 const loginPage = document.getElementById("loginPage");
 const userPage = document.getElementById("userPage");
 
+const btnLogIn = document.getElementById("btnLogIn");
+// console.log(btnLogIn);
 
+btnLogIn.addEventListener("click", function (){
+    console.log("klick btnLogIn");
+});
 
 //dynamiskt kunna byta ut alt lägga till/ta bort li i menyn
 //dynamiskt kunna byta ut h2 och p i main
