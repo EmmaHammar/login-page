@@ -14,9 +14,22 @@ ul.appendChild(li);
 li.insertAdjacentHTML("afterbegin", `<button id="btnLogIn">Logga in</button>`)
 // console.log(ul);
 //************************ Janne to local storage  
-let userNames = ["janne"];
-// console.log(userNames[0]);
-localStorage.setItem("userName", userNames[0]);
+// let userNames = ["janne"];
+// // console.log(userNames[0]);
+// localStorage.setItem("userName", userNames[0]);
+
+////testing 
+let userList = [ 
+    {userName: "janne", password: "test"}
+    // {userName: "emma", password: "test"}
+];
+
+
+// console.log(userList[0].userName + userList[0].password );
+let userNames = userList[0].userName; 
+let userPasswords = userList[0].password
+
+localStorage.setItem("userName", JSON.stringify(userNames));
 
 //************************ check if userName exists  1/2
 let userNameExist = false; //userName finns ej innan vi har börjat leta
@@ -41,9 +54,14 @@ btnLogIn.addEventListener("click", function (){
         const btnSend = document.getElementById("btnSend");
         
         //************************ check if userName exists  2/2
-        for (i=0; i < userNames.length; i++) {
-            console.log(userNames[i]);
-            if (inputUserName == userNames[i]) {
+
+//         console.log(userList[0].userName + userList[0].password );
+// let userNames = userList[0].userName;
+// let userPasswords = userList[0].password
+
+        for (i=0; i < userList.length; i++) {
+            console.log(userList[0].password);
+            if (inputUserName == userList[0].userName && userList[0].password) {
                 userNameExist = true;
                 console.log("visa inloggade vyn");
                 main.innerHTML = `
@@ -52,6 +70,7 @@ btnLogIn.addEventListener("click", function (){
                         <p>Här kan du se dina grejer.</p>
                     </section>`;
                 li.innerHTML = `<button id="btnLogOut">Logga ut</button>`;
+                //OBS fixa så det inte kommer felmeddelande varje gång knapptryckning
             }
 
             else {
@@ -80,9 +99,13 @@ btnLogIn.addEventListener("click", function (){
 //         console.log(allUserNames);
 //         localStorage.setItem("allUserNames", JSON.stringify(allUserNames));
 //ELLER
-// let userNameList = [ 
-//     {userName: "James"}
+
+// let userList = [ 
+//     {userName: "janne", password: "test"}
 // ];
+
+//let userNames = userList[i].userName;
+
 // localStorage.setItem("userNameList", JSON.stringify(userNameList));
 //******** /local storage createNewUser ********
 
