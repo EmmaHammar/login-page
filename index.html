@@ -19,17 +19,30 @@
     <header id="header">
         <h1>Logo</h1>
         <ul>
-            <li><button id="btn-login">Logga in</button></li>
+          <li><button>Logga in</button></li>
+          <li><button>Logga ut</button></li>
         </ul>
     </header>
-    
+
     <main>
-        <div id="notLoggedIn">
-            <h2>Välkommen</h2>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam eaque eius, corrupti iure totam et voluptatum aliquam dicta vero illo ea quod velit. Sint rem porro, et fugiat debitis distinctio?</p>
+        <div id="startPage">
+          <h2>Välkommen!</h2>
+          <p>Logga in i menyn för att se din personliga sida.</p>
         </div>
-        <div id="loginPage"></div>
-        <div id="isLoggedIn"></div>
+        <div id="loginPage">
+          <h2>Logga in</h2> 
+          <p>Användarnamn<p>
+          <input id="inputField" type="text" placeholder="Användarnamn"> 
+
+          <p>Lösenord</p>
+          <input type="text" placeholder="Lösenord"> 
+          <button id="btnSend">Skicka</button>
+          <div id="errorMess">Error</div>
+        </div>
+        <div id="userPage">
+          <h2>Välkommen till din personliga sida!</h2> 
+          <p>Här kan du se dina grejer.</p>
+        </div>
     </main>
 
     <footer>
