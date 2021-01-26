@@ -16,9 +16,32 @@ let userList = [
     {userName: "olle", password: "test3"}
 ];
 
-//HÄR LÅG let userNames = userList[0].userName; 
-// let userPasswords = userList[0].password
+function createNewAccount() {
+    register.innerHTML = `
+    <h2>Skapa nytt konto</h2> 
+    <p>Användarnamn<p>
+    <input id="newUserName" type="text" placeholder="Användarnamn"> 
+    <p>Lösenord</p>
+    <input id="newPassword" type="text" placeholder="Lösenord"> 
+    <button id="btnNewAccount">Skapa nytt konto</button>`;
 
+    const btnNewAccount = document.getElementById("btnNewAccount");
+    btnNewAccount.addEventListener("click", function () {
+        console.log("klick create new account");
+        let newUserName = document.getElementById("newUserName").value;
+        let newPassword = document.getElementById("newPassword").value;
+        console.log(newUserName);
+        console.log(newPassword);
+        let newUserAccount = [
+            {userName: newUserName, password: newPassword}
+        ];
+        console.log(newUserAccount);
+        userList.push(newUserAccount);
+        console.log(userList);
+
+        // localStorage.setItem("userName", JSON.stringify(userNames));
+    });
+};
 
 function printStartPage() {
 main.innerHTML = `        
@@ -93,24 +116,4 @@ function printUserPage() {
 function errorMess() {
     let errorMess = document.getElementById("errorMess");
     errorMess.innerHTML = "Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.";
-};
-
-function createNewAccount() {
-    register.innerHTML = `
-    <h2>Skapa nytt konto</h2> 
-    <p>Användarnamn<p>
-    <input id="newUserName" type="text" placeholder="Användarnamn"> 
-    <p>Lösenord</p>
-    <input id="newPassword" type="text" placeholder="Lösenord"> 
-    <button id="btnNewAccount">Skapa nytt konto</button>`;
-
-    const btnNewAccount = document.getElementById("btnNewAccount");
-    btnNewAccount.addEventListener("click", function () {
-        console.log("klick create new account");
-        let newUserName = document.getElementById("newUserName").value;
-        let newPassword = document.getElementById("newPassword").value;
-        console.log(newUserName);
-        console.log(newPassword);
-    });
-
 };
