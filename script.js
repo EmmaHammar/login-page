@@ -12,7 +12,8 @@ if (localStorage.getItem("userName") === null) {
 
 let userList = [ 
     {userName: "janne", password: "test"},
-    {userName: "emma", password: "test2"}
+    {userName: "emma", password: "test2"},
+    // {userName: newUserName, password: newPassword}
 ];
 
 function printStartPage() {
@@ -41,9 +42,8 @@ main.innerHTML = `
         const btnSend = document.getElementById("btnSend");
         
         for (i=0; i < userList.length; i++) {
-            console.log(userList[0].userName);
             console.log(userList[i].userName);
-            console.log(userList[0].password);
+            console.log(userList[i].password);
 
             let userNames = userList[i].userName; 
             let userPasswords = userList[i].password;
@@ -98,6 +98,17 @@ function printCreateAccountPage() {
     const btnCreateNewUser = document.getElementById("btnCreateNewUser");
     btnCreateNewUser.addEventListener("click", function () {
         console.log("klick skicka formuläret");
+        let newUserName = document.getElementById("inputUserNameNew").value;
+        console.log(newUserName);
+        let newPassword = document.getElementById("inputPasswordNew").value;
+        console.log(newPassword);
+
+        let addToUserList = [
+            {userName: newUserName, password: newPassword}
+        ];
+        console.log(addToUserList);
+        userList.push(addToUserList);
+        console.log(userList); //uppdated array with new userName. Denna vill jag ska in i 44:an - HUR???
     });
 
 };
