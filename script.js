@@ -71,7 +71,7 @@ main.innerHTML = `
 function printUserPage() {
     main.innerHTML = `
     <section id="userPage">
-        <h2>Välkommen till din personliga sida!</h2> 
+        <h2>Välkommen ${localStorage.getItem("userName")} till din personliga sida!</h2> 
         <p>Här kan du se dina grejer.</p>
         <button id="btnLogOut">Logga ut</button>
     </section>`;
@@ -109,6 +109,11 @@ function printCreateAccountPage() {
         console.log(addToUserList);
         userList.push(addToUserList);
         console.log(userList); //uppdated array with new userName. Denna vill jag ska in i 44:an - HUR???
+
+        //hämta logga in-funktionen + lägg till nya arrayen. HUR?
     });
 
 };
+
+//Frågor
+//Får felmeddelande när jag loggar in med janne men ej Emma. Uncaught TypeError: Cannot set property 'innerHTML' of null at HTMLButtonElement.<anonymous> (script.js:58)
