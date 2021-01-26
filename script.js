@@ -11,12 +11,14 @@ if (localStorage.getItem("userName") === null) {
 };
 
 let userList = [ 
-    {userName: "janne", password: "test"}
-    // {userName: "emma", password: "test2"}
+    {userName: "janne", password: "test"},
+    {userName: "emma", password: "test2"},
+    {userName: "olle", password: "test3"}
 ];
 
-let userNames = userList[0].userName; 
-let userPasswords = userList[0].password
+//HÄR LÅG let userNames = userList[0].userName; 
+// let userPasswords = userList[0].password
+
 
 function printStartPage() {
 main.innerHTML = `        
@@ -40,17 +42,23 @@ main.innerHTML = `
         const btnSend = document.getElementById("btnSend");
         
         for (i=0; i < userList.length; i++) {
-            console.log(userList[0].userName);
-            console.log(userList[0].password);
+            console.log(userList[i].userName);
+            console.log(userList[i].password);
 
-            if (inputUserName == userList[0].userName && inputPassword == userList[0].password) {
+            let userNames = userList[i].userName; 
+            let userPasswords = userList[i].password
+
+            if (inputUserName == userList[i].userName && inputPassword == userList[i].password) {
                 rightPassword = true;
                 console.log("visa inloggade vyn");
                 localStorage.setItem("userName", JSON.stringify(userNames));
                 printUserPage();
+                break;
             } else {
                 let errorMess = document.getElementById("errorMess");
+                // console.log(errorMess.innerHTML);
                 errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
+                // errorMess();
             };
         };
     });
@@ -59,7 +67,7 @@ main.innerHTML = `
 function printUserPage() {
     main.innerHTML = `
     <section>
-        <h2>Välkommen till din personliga sida!</h2> 
+        <h2>Välkommen ${localStorage.getItem("userName")} till din personliga sida!</h2> 
         <p>Här kan du se dina grejer.</p>
         <button id="btnLogOut">Logga ut</button>
     </section>`;
@@ -72,3 +80,9 @@ function printUserPage() {
         printStartPage();
     });
 };
+
+// function errorMess() {
+//     let errorMess = document.getElementById("errorMess");
+//                 // console.log(errorMess.innerHTML);
+//     errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
+// };
