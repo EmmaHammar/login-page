@@ -4,6 +4,7 @@ const ul = document.createElement("UL");
 header.appendChild(ul);
 
 const main = document.getElementsByTagName("MAIN")[0];
+main.id = "main";
 const startPage = document.getElementById("startPage");
 const loginPage = document.getElementById("loginPage");
 const userPage = document.getElementById("userPage");
@@ -30,7 +31,7 @@ let userPasswords = userList[0].password
 //************************ check if userName exists  1/2
 let isLoggedIn = false; //utloggad vy
 
-if (isLoggedIn === false) {
+function printStartPage() {
 main.innerHTML = `        
     <section id="loginPage">
         <h2>Logga in</h2> 
@@ -41,9 +42,31 @@ main.innerHTML = `
         <button id="btnSend">Skicka</button>
         <div id="errorMess"></div>
     </section>`;
+};
+
+function printUserPage() {
+    main.innerHTML = `
+    <section id="userPage">
+        <h2>Välkommen till din personliga sida!</h2> 
+        <p>Här kan du se dina grejer.</p>
+        <button id="btnLogOut">Logga ut</button>
+    </section>`;
+};
+
+
+if (isLoggedIn === false) {
+    printStartPage();
+};
+
+
+//print welcome page om ngn är inloggad
+//default
+if (localStorage.getItem("userName") === null) {
+    console.log("ingen är inloggad");
 }
-if (isLoggedIn === true) {
-    
+else {
+    console.log("någon är inloggad");
+
 }
    
     let rightPassword = false; // finns ej innan vi har börjat leta
@@ -66,26 +89,14 @@ if (isLoggedIn === true) {
                 rightPassword = true;
                 console.log("visa inloggade vyn");
                 localStorage.setItem("userName", JSON.stringify(userNames));
-                main.innerHTML = `
-                    <section id="userPage">
-                        <h2>Välkommen till din personliga sida!</h2> 
-                        <p>Här kan du se dina grejer.</p>
-                        <button id="btnLogOut">Logga ut</button>
-                    </section>`;
+                printUserPage();
                 
                 let btnLogOut = document.getElementById("btnLogOut");
                 btnLogOut.addEventListener("click", function () {
                     console.log("klick logga ut");
-                    main.innerHTML = `        
-                    <section id="loginPage">
-                        <h2>Logga in</h2> 
-                        <p>Användarnamn<p>
-                        <input id="inputUserName" type="text" placeholder="Användarnamn"> 
-                        <p>Lösenord</p>
-                        <input id="inputPassword" type="text" placeholder="Lösenord"> 
-                        <button id="btnSend">Skicka</button>
-                        <div id="errorMess"></div>
-                    </section>`;
+                    localStorage.clear(); 
+                    location.reload(); //laddar om sidan
+                    printStartPage();
                 });
             }
             else {
@@ -97,7 +108,7 @@ if (isLoggedIn === true) {
 
 
 //FRÅGOR: 
-// 1) Innehålls -vyn skall dynamiskt växla mellan två olika lägen. Var sätta andra if:en alt elsen? (rad 51)
+// 1) Innehålls -vyn skall dynamiskt växla mellan två olika lägen. Var sätta andra if:en alt elsen? (rad 45)
 // 2) När jag kommer tillbaka till login page via logga ut-knappen, något fel. Fångar inte klicket på skicka-knappen
 // 2) "Inloggning sparas i localStorage." Ska varje gång janne + test loggar in sparas i localStorage? 
 
