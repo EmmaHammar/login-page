@@ -19,10 +19,9 @@ ul.appendChild(li);
 // // console.log(userNames[0]);
 // localStorage.setItem("userName", userNames[0]);
 
-////testing 
 let userList = [ 
     {userName: "janne", password: "test"}
-    // {userName: "emma", password: "test"}
+    // {userName: "emma", password: "test2"}
 ];
 
 let userNames = userList[0].userName; 
@@ -77,7 +76,7 @@ if (isLoggedIn === true) {
                 let btnLogOut = document.getElementById("btnLogOut");
                 btnLogOut.addEventListener("click", function () {
                     console.log("klick logga ut");
-                    main.innerHTML = `  
+                    main.innerHTML = `        
                     <section id="loginPage">
                         <h2>Logga in</h2> 
                         <p>Användarnamn<p>
@@ -92,8 +91,6 @@ if (isLoggedIn === true) {
             else {
                 let errorMess = document.getElementById("errorMess");
                 errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
-                inputUserName.value = "";
-                inputPassword.value = "";
             };
         };
     });
