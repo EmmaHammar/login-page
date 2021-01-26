@@ -30,6 +30,12 @@ main.innerHTML = `
         <input id="inputPassword" type="text" placeholder="Lösenord"> 
         <button id="btnSend">Skicka</button>
         <div id="errorMess"></div>
+        <br>
+        <br>
+        <div id="register">
+            <p>Har du inget konto? Registrera dig här:</p>
+            <button id="btnRegister">Gå till registrering</button>
+        </div>
     </section>`;
 
     let rightPassword = false; // finns ej innan vi har börjat leta
@@ -55,12 +61,15 @@ main.innerHTML = `
                 printUserPage();
                 break;
             } else {
-                let errorMess = document.getElementById("errorMess");
-                // console.log(errorMess.innerHTML);
-                errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
-                // errorMess();
+                errorMess();
             };
         };
+    });
+    const btnRegister = document.getElementById("btnRegister");
+    const register = document.getElementById("register");
+    btnRegister.addEventListener("click", function () {
+        console.log("klick gå till registrering");
+        createNewAccount();
     });
 };
 
@@ -72,7 +81,7 @@ function printUserPage() {
         <button id="btnLogOut">Logga ut</button>
     </section>`;
 
-    let btnLogOut = document.getElementById("btnLogOut");
+    const btnLogOut = document.getElementById("btnLogOut");
     btnLogOut.addEventListener("click", function () {
         console.log("klick logga ut");
         localStorage.clear(); 
@@ -81,8 +90,27 @@ function printUserPage() {
     });
 };
 
-// function errorMess() {
-//     let errorMess = document.getElementById("errorMess");
-//                 // console.log(errorMess.innerHTML);
-//     errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
-// };
+function errorMess() {
+    let errorMess = document.getElementById("errorMess");
+    errorMess.innerHTML = "Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.";
+};
+
+function createNewAccount() {
+    register.innerHTML = `
+    <h2>Skapa nytt konto</h2> 
+    <p>Användarnamn<p>
+    <input id="newUserName" type="text" placeholder="Användarnamn"> 
+    <p>Lösenord</p>
+    <input id="newPassword" type="text" placeholder="Lösenord"> 
+    <button id="btnNewAccount">Skapa nytt konto</button>`;
+
+    const btnNewAccount = document.getElementById("btnNewAccount");
+    btnNewAccount.addEventListener("click", function () {
+        console.log("klick create new account");
+        let newUserName = document.getElementById("newUserName").value;
+        let newPassword = document.getElementById("newPassword").value;
+        console.log(newUserName);
+        console.log(newPassword);
+    });
+
+};
