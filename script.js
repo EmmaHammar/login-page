@@ -31,7 +31,7 @@ let userList = [
 let userNames = userList[0].userName; 
 let userPasswords = userList[0].password
 
-localStorage.setItem("userName", JSON.stringify(userNames));
+// localStorage.setItem("userName", JSON.stringify(userNames));
 
 //************************ check if userName exists  1/2
 let userNameExist = false; //userName finns ej innan vi har börjat leta
@@ -67,6 +67,7 @@ btnLogIn.addEventListener("click", function (){
             if (inputUserName == userList[0].userName && userList[0].password) {
                 userNameExist = true;
                 console.log("visa inloggade vyn");
+                localStorage.setItem("userName", JSON.stringify(userNames));
                 main.innerHTML = `
                     <section id="userPage">
                         <h2>Välkommen till din personliga sida!</h2> 
@@ -88,18 +89,18 @@ btnLogIn.addEventListener("click", function (){
             else {
                 let errorMess = document.getElementById("errorMess");
                 errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
+                inputFieldName.value = "";
+                inputFieldPassword.value = "";
             }
-            
         }
-        inputFieldName.value = "";
-        inputFieldPassword.value = "";
+        
 
     });
 });
 
 //FRÅGOR: 
 // 1) Innehålls -vyn skall dynamiskt växla mellan tre olika lägen. Tips?
-// 2) Inloggning sparas i localStorage. (10p) Vad menas med det?
+// 2) "Inloggning sparas i localStorage." Ska varje gång janne + test loggar in sparas i localStorage? 
 
 
 
