@@ -11,9 +11,8 @@ const userPage = document.getElementById("userPage");
 //************************ HEADER - btLogIn **********************
 const li = document.createElement("LI");
 ul.appendChild(li);
-li.insertAdjacentHTML("afterbegin", `<button id="btnLogIn">Logga in</button>`)
+// li.insertAdjacentHTML("afterbegin", `<button id="btnLogIn">Logga in</button>`)
 // console.log(ul);
-
 
 //************************ Janne to local storage  
 // let userNames = ["janne"];
@@ -26,80 +25,83 @@ let userList = [
     // {userName: "emma", password: "test"}
 ];
 
-
-// console.log(userList[0].userName + userList[0].password );
 let userNames = userList[0].userName; 
 let userPasswords = userList[0].password
 
-// localStorage.setItem("userName", JSON.stringify(userNames));
-
 //************************ check if userName exists  1/2
-let userNameExist = false; //userName finns ej innan vi har börjat leta
+let isLoggedIn = false; //utloggad vy
 
-btnLogIn.addEventListener("click", function (){
-    console.log("klick btnLogIn");
-    main.innerHTML = `        
+if (isLoggedIn === false) {
+main.innerHTML = `        
     <section id="loginPage">
         <h2>Logga in</h2> 
         <p>Användarnamn<p>
-        <input id="inputFieldName" type="text" placeholder="Användarnamn"> 
+        <input id="inputUserName" type="text" placeholder="Användarnamn"> 
         <p>Lösenord</p>
-        <input id="inputFieldPassword" type="text" placeholder="Lösenord"> 
+        <input id="inputPassword" type="text" placeholder="Lösenord"> 
         <button id="btnSend">Skicka</button>
         <div id="errorMess"></div>
     </section>`;
-   
+}
+if (isLoggedIn === true) {
     
+}
+   
+    let rightPassword = false; // finns ej innan vi har börjat leta
+
     btnSend.addEventListener("click", function () {
-        let inputUserName = document.getElementById("inputFieldName").value;
-        console.log(inputFieldName.value);
+        let inputUserName = document.getElementById("inputUserName").value;
+        console.log("klick btnSend");
+        // console.log(inputUserName);
+        let inputPassword = document.getElementById("inputPassword").value;
+        // console.log(inputPassword);
+
         const btnSend = document.getElementById("btnSend");
         
-        //************************ check if userName exists  2/2
-
-//         console.log(userList[0].userName + userList[0].password );
-// let userNames = userList[0].userName;
-// let userPasswords = userList[0].password
-
+        //************************ check if userName+password is correct  2/2
         for (i=0; i < userList.length; i++) {
+            console.log(userList[0].userName);
             console.log(userList[0].password);
 
-            if (inputUserName == userList[0].userName && userList[0].password) {
-                userNameExist = true;
+            if (inputUserName == userList[0].userName && inputPassword == userList[0].password) {
+                rightPassword = true;
                 console.log("visa inloggade vyn");
                 localStorage.setItem("userName", JSON.stringify(userNames));
                 main.innerHTML = `
                     <section id="userPage">
                         <h2>Välkommen till din personliga sida!</h2> 
                         <p>Här kan du se dina grejer.</p>
+                        <button id="btnLogOut">Logga ut</button>
                     </section>`;
-                li.innerHTML = `<button id="btnLogOut">Logga ut</button>`;
                 
                 let btnLogOut = document.getElementById("btnLogOut");
                 btnLogOut.addEventListener("click", function () {
                     console.log("klick logga ut");
                     main.innerHTML = `  
-                    <section id="startPage">
-                        <h2>Välkommen!</h2>
-                        <p>Logga in i menyn för att se din personliga sida.</p>
-                  </section>`;
+                    <section id="loginPage">
+                        <h2>Logga in</h2> 
+                        <p>Användarnamn<p>
+                        <input id="inputUserName" type="text" placeholder="Användarnamn"> 
+                        <p>Lösenord</p>
+                        <input id="inputPassword" type="text" placeholder="Lösenord"> 
+                        <button id="btnSend">Skicka</button>
+                        <div id="errorMess"></div>
+                    </section>`;
                 });
             }
-
             else {
                 let errorMess = document.getElementById("errorMess");
                 errorMess.innerHTML = "Error, vänligen kontrollera så att du skrivit rätt användarnamn och lösenord.";
-                inputFieldName.value = "";
-                inputFieldPassword.value = "";
-            }
-        }
-        
-
+                inputUserName.value = "";
+                inputPassword.value = "";
+            };
+        };
     });
-});
+
 
 //FRÅGOR: 
-// 1) Innehålls -vyn skall dynamiskt växla mellan tre olika lägen. Tips?
+// 1) Innehålls -vyn skall dynamiskt växla mellan två olika lägen. Var sätta andra if:en alt elsen? (rad 51)
+// 2) När jag kommer tillbaka till login page via logga ut-knappen, något fel. Fångar inte klicket på skicka-knappen
 // 2) "Inloggning sparas i localStorage." Ska varje gång janne + test loggar in sparas i localStorage? 
 
 
