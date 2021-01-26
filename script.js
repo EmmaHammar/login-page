@@ -1,8 +1,5 @@
 const main = document.getElementsByTagName("MAIN")[0];
 main.id = "main";
-const startPage = document.getElementById("startPage");
-const loginPage = document.getElementById("loginPage");
-const userPage = document.getElementById("userPage");
 
 //print welcome page om ngn är inloggad, default | print userPage om ngn är inloggad (i localStorage)
 if (localStorage.getItem("userName") === null) {
@@ -18,12 +15,12 @@ let userList = [
     // {userName: "emma", password: "test2"}
 ];
 
-let userNames = userList[0].userName; 
-let userPasswords = userList[0].password
+// let userNames = userList[0].userName; 
+// let userPasswords = userList[0].password;
 
 function printStartPage() {
 main.innerHTML = `        
-    <section id="loginPage">
+    <section class="loginPage">
         <h2>Logga in</h2> 
         <p>Användarnamn<p>
         <input id="inputUserName" type="text" placeholder="Användarnamn"> 
@@ -31,6 +28,10 @@ main.innerHTML = `
         <input id="inputPassword" type="text" placeholder="Lösenord"> 
         <button id="btnSend">Skicka</button>
         <div id="errorMess"></div>
+        <br>
+        <br>
+        <p>Ny användare?</p>
+        <button id="btnAccount">Skapa konto</button>
     </section>`;
 
     let rightPassword = false; // finns ej innan vi har börjat leta
@@ -46,6 +47,9 @@ main.innerHTML = `
             console.log(userList[0].userName);
             console.log(userList[0].password);
 
+            let userNames = userList[0].userName; 
+            let userPasswords = userList[0].password;
+
             if (inputUserName == userList[0].userName && inputPassword == userList[0].password) {
                 rightPassword = true;
                 console.log("visa inloggade vyn");
@@ -57,6 +61,13 @@ main.innerHTML = `
             };
         };
     });
+
+    const btnAccount = document.getElementById("btnAccount");
+    btnAccount.addEventListener("click", function () {
+        console.log("klick skapa konto");
+        printCreateAccountPage();
+    });
+
 };
 
 function printUserPage() {
@@ -67,11 +78,28 @@ function printUserPage() {
         <button id="btnLogOut">Logga ut</button>
     </section>`;
 
-    let btnLogOut = document.getElementById("btnLogOut");
+    const btnLogOut = document.getElementById("btnLogOut");
     btnLogOut.addEventListener("click", function () {
         console.log("klick logga ut");
         localStorage.clear(); 
         location.reload(); //laddar om sidan
         printStartPage();
     });
+};
+
+function printCreateAccountPage() {
+    main.insertAdjacentHTML("beforeend", `
+        <section class="signUpPage">
+            <h2>Ny användare</h2> 
+            <input id="inputUserNameNew" type="text" placeholder="Välj användarnamn"> 
+            <p>Lösenord</p>
+            <input id="inputPasswordNew" type="text" placeholder="Välj lösenord"> 
+            <button id="btnCreateNewUser">Nytt konto</button>
+        </section>`);
+
+    const btnCreateNewUser = document.getElementById("btnCreateNewUser");
+    btnCreateNewUser.addEventListener("click", function () {
+        console.log("klick skicka formuläret");
+    });
+
 };
