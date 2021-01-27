@@ -3,6 +3,8 @@ main.id = "main";
 const header = document.getElementsByTagName("HEADER")[0];
 const divInputHeader = document.createElement("DIV");
 header.appendChild(divInputHeader);
+const divRegisterHeader = document.createElement("DIV");
+header.appendChild(divRegisterHeader);
 // console.log(divInputHeader);
 
 //Shift pages logged in vs logged out
@@ -29,12 +31,15 @@ function createNewAccount() {
     btnRegister.addEventListener("click", function () {
         console.log("klick gå till registrering");
         
-        divInputHeader.insertAdjacentHTML("beforeend", `
+        //vill att btnContainer ska bli tom: 
+        btnContainer.innerHTML = "";
+
+        divRegisterHeader.innerHTML = `
             <h2>Registrera dig</h2> 
             <input id="newInputUserName" type="text" placeholder="Användarnamn"> 
             <input id="newInputPassword" type="text" placeholder="Lösenord"> 
-            <button id="btnNewAccount">Skapa konto</button>`);
-        ;
+            <button id="btnNewAccount">Skapa konto</button>
+        `;
 
         const btnNewAccount = document.getElementById("btnNewAccount");
 
@@ -62,25 +67,13 @@ function createNewAccount() {
             // console.log(getUserList);
             //Sparar nya listan med nytt namn i localStorage
             // localStorage.setItem("userList", JSON.stringify(getUserList));
-
+            divRegisterHeader.innerHTML = "";
         });
     });
 };
-// *************************** /new account 
 
 function printStartPage() {
-    divInputHeader.innerHTML = `        
-        <section>
-            <h2>Logga in</h2> 
-            <input id="inputUserName" type="text" placeholder="Användarnamn"> 
-            <input id="inputPassword" type="text" placeholder="Lösenord"> 
-            <button id="btnSend">Skicka</button>
-            <div id="errorMess"></div>
-            <br>
-            <br>
-            <button id="btnRegister">Ny användare</button>
-        </section>
-    `;
+    login();
     main.innerHTML = "<h2>Välkommen!</h2>";
 
     let rightPassword = false; 
@@ -102,7 +95,8 @@ function printStartPage() {
             // console.log(fullList[i].password);
             // console.log(fullList, "uppdaterad old userList innifrån forloope");
 
-            let userNames = fullList[i].userName; 
+            let userNames = fullList[i].userName; // OBS blir felmeddelande om jag skriver in fel namn vid login: Uncaught TypeError: Cannot read property 'userName' of null at HTMLButtonElement.<anonymous> (script.js:109)
+            
             let userPasswords = fullList[i].password;
 
             if (inputUserName === fullList[i].userName && inputPassword === fullList[i].password ) {
@@ -118,6 +112,21 @@ function printStartPage() {
         };
     });
    createNewAccount();
+};
+
+function login() {
+    divInputHeader.innerHTML = `        
+        <section>
+            <h2>Logga in</h2> 
+            <input id="inputUserName" type="text" placeholder="Användarnamn"> 
+            <input id="inputPassword" type="text" placeholder="Lösenord"> 
+            <button id="btnSend">Skicka</button>
+            <div id="errorMess"></div>
+            <div id=btnContainer>
+                <button id="btnRegister">Ny användare</button>
+            </div>
+        </section>
+    `;
 };
 
 function errorMess() {
