@@ -38,8 +38,8 @@ function createNewAccount() {
         console.log(newUserAccount);
         userList.push(newUserAccount);
         console.log(userList);
-
-        // localStorage.setItem("userName", JSON.stringify(userNames));
+        
+        // localStorage.setItem("newUserNameList", JSON.stringify(userNames));
     });
 };
 
@@ -96,6 +96,12 @@ main.innerHTML = `
     });
 };
 
+
+// vill få bort "" i "janne" 
+// let userName = localStorage.getItem("userName")
+/* <h2>Välkommen ${userList[i].userName} till din personliga sida!</h2>  */
+
+
 function printUserPage() {
     main.innerHTML = `
     <section>
@@ -117,3 +123,8 @@ function errorMess() {
     let errorMess = document.getElementById("errorMess");
     errorMess.innerHTML = "Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.";
 };
+
+//Fråga: 
+//Punkt 3 - har påbörjat - bättre att lämna in halvfärdig eller ska jag ta helt bort den då? 
+//Vet inte ens om jag kommer uppnå vg så är det onödigt att lägga tid på självreflekterande text? 
+//<h2>Välkommen ${localStorage.getItem("userName")} till din personliga sida!</h2>  GÅR EJ FÖR NY ANVÄNDARE SOM HAR ANVÄNDARNAMN newUserName
