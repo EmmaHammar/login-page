@@ -23,15 +23,6 @@ let userList = [
 // ************************************************************************************
 // ************************************ START PAGE  ***********************************
 // ************************************************************************************
-
-// *************************** new account 
-        // if (localStorage.getItem("newUserName") === null) {
-        //     console.log("ingen är inloggad");
-        //     printStartPage();
-        // } else {
-        //     console.log("någon är inloggad");
-        //     printUserPage();
-        // };
 function createNewAccount() {
     const btnRegister = document.getElementById("btnRegister");
 
@@ -56,46 +47,22 @@ function createNewAccount() {
             console.log(newInputPassword);
 
             let newUserList = {userName: newInputUserName, password: newInputPassword};
-
             console.log(newUserList, "new userList");
             userList.push(newUserList); //uppdaterar gamla listan med nya namn
             console.log(userList, "uppdaterad old userList");
-            // console.log(newUserList[0], "newUserList[0]");
-            // localStorage.setItem("updatedUserList", JSON.stringify(newUserList[0]));
-            
-            
-            //kolla om newUserList.userName redan finns i userList (så att det är unika användarnamn)
 
-            //kör for loop för att hämta alla userName (gamla+nya)
-            
-            //sparar i localStorage localStorage.setItem("updatedUserList", JSON.stringify(updatedUserNames));
-            //Gör en ny if-sats med 
+            //skriver över i localStorage med uppdaterade listan
+            localStorage.setItem("updatedUserList", JSON.stringify(userList));
 
+            //hämtar uppdaterade listan från localStorage
+            let getNewUserList = JSON.parse(localStorage.getItem("updatedUserList"));
 
-            // for (i=0; i < newUserList.length; i++) {
-            //     console.log(newUserList[i].userName);
-            //     console.log(newUserList[i].password);
+            //vill skapa en ny array som användarnamn+lösen kan köras mot? (lägga till i befintlig eller göra en helt ny?)
+            for (i=0; i < getNewUserList.length; i++) {
+                console.log(getNewUserList[i].userName);
 
-            //     let newUserNames = newUserList[i].userName; 
-            //     let newUserPasswords = newUserList[i].password;
-            //     //Hämta gamla arrayen, men userNames finns ej i detta scope
-
-            //     // let getUserList = JSON.parse(localStorage.getItem(userNames));
-            //     // getUserList.push(newUserList);
-
-            //     //Nedan skriver över:
-            //     localStorage.setItem("newUserName", JSON.stringify(newUserNames));
-                
-            //     if (newUserNames == newUserList[i].userName && newUserPasswords == newUserList[i].password) {
-            //         rightPassword = true;
-            //         console.log("visa inloggade vyn");
-            //         // localStorage.setItem("userName", JSON.stringify(userNames));
-            //         printUserPage();
-            //         break;
-            //     } else {
-            //             errorMess();
-            //         };
-            // };
+                let allUserNames = localStorage.setItem("userName", JSON.stringify(getNewUserList)); //Denna vill jag ska sparas när vi loggar ut?? 
+            };
         });
     });
 };
@@ -165,12 +132,16 @@ function printUserPage() {
     main.innerHTML = `
     <h2>Välkommen ${localStorage.getItem("userName")} till din personliga sida!</h2> 
     <p>Här kan du se dina grejer.</p>`;
+    logout();
+};
 
+function logout() {
     const btnLogOut = document.getElementById("btnLogOut");
     btnLogOut.addEventListener("click", function () {
         console.log("klick logga ut");
-        localStorage.clear(); //vill eg bara cleara userName[i].userName
-        location.reload(); 
+        localStorage.clear();         //vill eg bara cleara currentuser - userName[i].userName
+        // localStorage.removeItem();
+        // location.reload(); 
         printStartPage();
     });
 };
