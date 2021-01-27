@@ -21,8 +21,10 @@ let userList = [
 ];
 
 // ************************************************************************************
-// *************************** new account on START PAGE ******************************
+// ************************************ START PAGE  ***********************************
 // ************************************************************************************
+
+// *************************** new account 
         // if (localStorage.getItem("newUserName") === null) {
         //     console.log("ingen är inloggad");
         //     printStartPage();
@@ -36,11 +38,11 @@ function createNewAccount() {
     btnRegister.addEventListener("click", function () {
         console.log("klick gå till registrering");
         
-        divInputHeader.innerHTML = `
+        divInputHeader.insertAdjacentHTML("beforeend", `
             <h2>Registrera dig</h2> 
             <input id="newInputUserName" type="text" placeholder="Användarnamn"> 
             <input id="newInputPassword" type="text" placeholder="Lösenord"> 
-            <button id="btnNewAccount">Skapa konto</button>`
+            <button id="btnNewAccount">Skapa konto</button>`);
         ;
 
         const btnNewAccount = document.getElementById("btnNewAccount");
@@ -53,13 +55,19 @@ function createNewAccount() {
             console.log(newInputUserName);
             console.log(newInputPassword);
 
-            let newUserList = [
-                {userName: newInputUserName, password: newInputPassword}
-            ];
+            let newUserList = {userName: newInputUserName, password: newInputPassword};
 
             console.log(newUserList, "new userList");
             userList.push(newUserList); //uppdaterar gamla listan med nya namn
+            console.log(userList, "uppdaterad old userList");
+            // console.log(newUserList[0], "newUserList[0]");
+            // localStorage.setItem("updatedUserList", JSON.stringify(newUserList[0]));
+            
+            
+            //kolla om newUserList.userName redan finns i userList (så att det är unika användarnamn)
+
             //kör for loop för att hämta alla userName (gamla+nya)
+            
             //sparar i localStorage localStorage.setItem("updatedUserList", JSON.stringify(updatedUserNames));
             //Gör en ny if-sats med 
 
@@ -91,13 +99,8 @@ function createNewAccount() {
         });
     });
 };
-// ************************************************************************************
-// *************************** /new account on START PAGE *****************************
-// ************************************************************************************
+// *************************** /new account 
 
-// ************************************************************************************
-// ************************************ START PAGE  ***********************************
-// ************************************************************************************
 function printStartPage() {
     divInputHeader.innerHTML = `        
         <section>
@@ -124,13 +127,17 @@ function printStartPage() {
         for (i=0; i < userList.length; i++) {
             console.log(userList[i].userName);
             console.log(userList[i].password);
+            console.log(userList, "uppdaterad old userList innifrån forloope");
+
 
             let userNames = userList[i].userName; 
+            // return userNames;
             let userPasswords = userList[i].password;
 
             if (inputUserName === userList[i].userName && inputPassword === userList[i].password) {
                 rightPassword = true;
                 console.log("visa inloggade vyn");
+                //hämta, ändra, skicka upp igen
                 localStorage.setItem("userName", JSON.stringify(userNames));
                 printUserPage();
                 break;
@@ -139,7 +146,12 @@ function printStartPage() {
             };
         };
     });
-   createNewAccount();
+   createNewAccount();//denna bör väl köras innan själva start pages for loop??
+};
+
+function errorMess() {
+    let errorMess = document.getElementById("errorMess");
+    errorMess.innerHTML = "Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.";
 };
 // ************************************************************************************
 // ************************************ /START PAGE  **********************************
@@ -157,15 +169,10 @@ function printUserPage() {
     const btnLogOut = document.getElementById("btnLogOut");
     btnLogOut.addEventListener("click", function () {
         console.log("klick logga ut");
-        localStorage.clear(); 
+        localStorage.clear(); //vill eg bara cleara userName[i].userName
         location.reload(); 
         printStartPage();
     });
-};
-
-function errorMess() {
-    let errorMess = document.getElementById("errorMess");
-    errorMess.innerHTML = "Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.";
 };
 // ************************************************************************************
 // ************************************ /USER PAGE  ***********************************
