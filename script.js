@@ -29,12 +29,12 @@ function createNewAccount() {
     btnRegister.addEventListener("click", function () {
         console.log("klick gå till registrering");
         
-        divInputHeader.insertAdjacentHTML("beforeend", `
+        divInputHeader.innerHTML = `
             <h2>Registrera dig</h2> 
             <input id="newInputUserName" type="text" placeholder="Användarnamn"> 
             <input id="newInputPassword" type="text" placeholder="Lösenord"> 
-            <button id="btnNewAccount">Skapa konto</button>`);
-        ;
+            <button id="btnNewAccount">Skapa konto</button>`;
+        
 
         const btnNewAccount = document.getElementById("btnNewAccount");
 
@@ -56,12 +56,15 @@ function createNewAccount() {
 
             //hämtar uppdaterade listan från localStorage
             let getNewUserList = JSON.parse(localStorage.getItem("updatedUserList"));
-            console.log(getNewUserList);
+            console.log(getNewUserList, "get new user list finish");
+            console.log(userList); // samma som getNewUserList, varför? pga har pushat?
+            
+            //NU ÄR USERLIST DEN DU KAN KÖRA MOT VID INLOGGNING
 
             //spara nya arrayen getNewUserList i localStorage
             localStorage.setItem("userList", JSON.stringify(getNewUserList)); 
 
-            //checka log in mot userList också. 
+            //checka log in mot userList också.
 
             //vill skapa en ny array som användarnamn+lösen kan köras mot? (lägga till i befintlig eller göra en helt ny?)
             // for (i=0; i < getNewUserList.length; i++) {
@@ -69,6 +72,58 @@ function createNewAccount() {
 
             //     let allUserNames = localStorage.setItem("userName", JSON.stringify(getNewUserList)); //Denna vill jag ska sparas när vi loggar ut?? 
             // };
+
+            divInputHeader.innerHTML = `        
+            <section>
+                <h2>Logga in med nya kontot</h2> 
+                <input id="inputNameFirst" type="text" placeholder="Användarnamn"> 
+                <input id="inputPasswordFirst" type="text" placeholder="Lösenord"> 
+                <button id="btnSendFirst">Skicka</button>
+                <div id="errorMess"></div>
+                <br>
+                <br>
+                <button id="btnRegister">Ny användare</button>
+            </section>`;
+
+            let rightPasswordFirst = false;
+            const btnSendFirst = document.getElementById("btnSendFirst");
+
+            btnSendFirst.addEventListener("click", function () {
+                let inputNameFirst = document.getElementById("inputNameFirst").value;
+                console.log("klick btnSendFirst");
+                console.log(inputNameFirst);
+                let inputPasswordFirst = document.getElementById("inputPasswordFirst").value;
+                console.log(inputPasswordFirst);
+            
+
+                //new users 
+                let newUserListLogin = JSON.parse(localStorage.getItem("updatedUserList"));
+
+                console.log(newUserListLogin);
+
+                for (i=0; i < newUserListLogin.length; i++) {
+                    console.log(newUserListLogin[i].userName);
+                    console.log(newUserListLogin[i].password);
+                    console.log(newUserListLogin, "uppdaterad old userList innifrån forloope");
+
+                    let userNames = newUserListLogin[i].userName; 
+                    // return userNames;
+                    let userPasswords = newUserListLogin[i].password;
+
+                    if (inputNameFirst === newUserListLogin[i].userName && inputPasswordFirst === newUserListLogin[i].password) {
+                        rightPassword = true;
+                        console.log("visa inloggade vyn");
+                        //hämta, ändra, skicka upp igen
+                        // localStorage.setItem("userName", JSON.stringify(userNames));
+                        printUserPage();
+                        break;
+                    } else {
+                        errorMess();
+                    };
+                };
+            });
+
+
         });
     });
 };
@@ -96,22 +151,45 @@ function printStartPage() {
         let inputPassword = document.getElementById("inputPassword").value;
         // console.log(inputPassword);
         const btnSend = document.getElementById("btnSend");
+        
+        // //new users 
+        // let newUserListLogin = JSON.parse(localStorage.getItem("updatedUserList"));
 
-        let newUserListLogin = JSON.parse(localStorage.getItem("updatedUserList"));
+        // console.log(newUserListLogin);
 
-        console.log(newUserListLogin);
-
-        for (i=0; i < newUserListLogin.length; i++) {
-            console.log(newUserListLogin[i].userName);
-            console.log(newUserListLogin[i].password);
-            console.log(newUserListLogin, "uppdaterad old userList innifrån forloope");
+        // for (i=0; i < newUserListLogin.length; i++) {
+        //     console.log(newUserListLogin[i].userName);
+        //     console.log(newUserListLogin[i].password);
+        //     console.log(newUserListLogin, "uppdaterad old userList innifrån forloope");
 
 
-            let userNames = newUserListLogin[i].userName; 
+        //     let userNames = newUserListLogin[i].userName; 
+        //     // return userNames;
+        //     let userPasswords = newUserListLogin[i].password;
+
+        //     if (inputUserName === newUserListLogin[i].userName && inputPassword === newUserListLogin[i].password) {
+        //         rightPassword = true;
+        //         console.log("visa inloggade vyn");
+        //         //hämta, ändra, skicka upp igen
+        //         localStorage.setItem("userName", JSON.stringify(userNames));
+        //         printUserPage();
+        //         break;
+        //     } else {
+        //         errorMess();
+        //     };
+        // };
+
+        // old users
+        for (i=0; i < userList.length; i++) {
+            console.log(userList[i].userName);
+            console.log(userList[i].password);
+            console.log(userList, "uppdaterad old userList innifrån forloope");
+
+            let userNames = userList[i].userName; 
             // return userNames;
-            let userPasswords = newUserListLogin[i].password;
+            let userPasswords = userList[i].password;
 
-            if (inputUserName === newUserListLogin[i].userName && inputPassword === newUserListLogin[i].password) {
+            if (inputUserName === userList[i].userName && inputPassword === userList[i].password) {
                 rightPassword = true;
                 console.log("visa inloggade vyn");
                 //hämta, ändra, skicka upp igen
@@ -150,7 +228,7 @@ function logout() {
     btnLogOut.addEventListener("click", function () {
         console.log("klick logga ut");
         localStorage.clear();         //vill eg bara cleara currentuser - userName[i].userName
-        // localStorage.removeItem();
+        // localStorage.removeItem("userName");
         // location.reload(); 
         printStartPage();
     });
