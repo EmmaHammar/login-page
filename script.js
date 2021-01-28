@@ -1,13 +1,28 @@
+// ************************************************************************************
+// ************************************ GLOBAL      ***********************************
+// ************************************************************************************
 const main = document.getElementsByTagName("MAIN")[0];
 main.id = "main";
 const header = document.getElementsByTagName("HEADER")[0];
-const divInputHeader = document.createElement("DIV");
-header.appendChild(divInputHeader);
+const divLoginHeader = document.createElement("DIV");
+header.appendChild(divLoginHeader);
 const divRegisterHeader = document.createElement("DIV");
 header.appendChild(divRegisterHeader);
-// console.log(divInputHeader);
+// console.log(divLoginHeader);
 
-//Shift pages logged in vs logged out
+let userList = [ 
+    {userName: "janne", password: "test"},
+    {userName: "emma", password: "test2"},
+    {userName: "olle", password: "test3"}
+];
+
+//Om userList i localStorage är tom när sidan laddas så sparas userList-arrayen till localStorage( men bara då för annars skriver jag över ev nya användare)
+if (JSON.parse(localStorage.getItem("userList")) === null) {
+    console.log("userList ursprung sparas i localStorage");
+    localStorage.setItem("userList", JSON.stringify(userList));
+};
+
+//Om userName i localStorage är tom så visas StartPage. Om den inte är tom så visas UserPage.
 if (localStorage.getItem("userName") === null) {
     console.log("ingen är inloggad");
     printStartPage();
@@ -17,61 +32,76 @@ if (localStorage.getItem("userName") === null) {
     printUserPage();
 };
 
-let userList = [ 
-    {userName: "janne", password: "test"},
-    {userName: "emma", password: "test2"},
-    {userName: "olle", password: "test3"}
-];
-
-function btnCreateAccount() {
-    const btnNewAccount = document.getElementById("btnNewAccount");
-
-    btnNewAccount.addEventListener("click", function () {
-        let newInputUserName = document.getElementById("newInputUserName").value;
-        let newInputPassword = document.getElementById("newInputPassword").value;
-        console.log(newInputUserName);
-        console.log(newInputPassword);
-
-        //ny array med nytt namn+lösen
-        let newUser= [{userName: newInputUserName, password: newInputPassword}];
-        console.log(newUser, "new user");
-        
-        if (localStorage.getItem("userList") === null) {
-            console.log("UserList TOM lägger vi till o sparar");
-            
-            // userList.push(newUser);
-            // console.log("efter push newUser", userlist);
-            localStorage.setItem("userList", JSON.stringify(newUser));
-            console.log("userlist om userlist tom");
-        
-            
-        } else {
-            console.log("UserList FINNS hämtar, lägger till o sparar");
-
-            //hämta
-            let getFirstNewUser = JSON.parse(localStorage.getItem("userList"));
-
-            //ändra
-            console.log("första nya användaren ", getFirstNewUser); 
-            console.log("andra nya användaren", newUser); 
-            let allNewUsers = newUser.concat(getFirstNewUser);
-            console.log(allNewUsers);
-
-            //spara
-            localStorage.setItem("userList", JSON.stringify(allNewUsers));
-            };
-
-        divRegisterHeader.innerHTML = "";
-    });
-}
-
 // ************************************************************************************
 // ************************************ START PAGE  ***********************************
 // ************************************************************************************
-function printCreateAccount() {
-    const btnRegister = document.getElementById("btnRegister");
+function printStartPage() {
+    login();
+    main.innerHTML = "<h2>Välkommen!</h2>";
 
-    btnRegister.addEventListener("click", function () {
+    let loginOk = false; 
+    const btnLogin = document.getElementById("btnLogin");
+    btnLogin.addEventListener("click", function () {
+        divRegisterHeader.innerHTML = "";
+        let valueUserName = document.getElementById("inputUserName").value;
+        console.log("klick btnLogin");
+        // console.log("valueUserName", valueUserName);
+        let valuePassword = document.getElementById("inputPassword").value;
+        // console.log("valuePassword", valuePassword);
+        
+        //Kolla inloggningen mot senaste datan från localStorage:
+        //hämtar senaste versionen av "JSON arrayen" från localStorage
+        let updatedUserList = JSON.parse(localStorage.getItem("userList"));
+        console.log(updatedUserList); 
+
+        //logincheck 
+        for (i=0; i < updatedUserList.length; i++) {
+            // console.log("updatedUserList[i].userName", updatedUserList[i].userName);
+
+            let userNames = updatedUserList[i].userName; 
+            let userPasswords = updatedUserList[i].password;
+
+            if (valueUserName === userNames && valuePassword === userPasswords ) {
+                loginOk = true;
+                console.log("loginOK = true, visa inloggade vyn");
+                //om loginOk sparas key: userName i localStorage (reglerar vy startPage eller userPage)
+                localStorage.setItem("userName", JSON.stringify(userNames));
+                printUserPage();
+                break;
+            } else {
+                errorDiv();
+            };
+        };
+    });
+   printRegisterDiv();
+};
+
+function login() {
+    divLoginHeader.innerHTML = `        
+        <section>
+            <h2>Logga in</h2> 
+            <input id="inputUserName" type="text" placeholder="Användarnamn"> 
+            <input id="inputPassword" type="text" placeholder="Lösenord"> 
+            <button id="btnLogin">Logga in</button>
+            <div id="errorDiv"></div>
+            <div id=btnContainer>
+                <button id="btnPrintRegisterDiv">Gå till registrering</button>
+            </div>
+        </section>
+    `;
+};
+
+function errorDiv() {
+    let errorDiv = document.getElementById("errorDiv");
+    errorDiv.innerHTML = `
+        Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.
+    `;
+};
+
+function printRegisterDiv() {
+    const btnPrintRegisterDiv = document.getElementById("btnPrintRegisterDiv");
+
+    btnPrintRegisterDiv.addEventListener("click", function () {
         console.log("klick gå till registrering");
         
         //vill att btnContainer ska bli tom: 
@@ -79,81 +109,35 @@ function printCreateAccount() {
 
         divRegisterHeader.innerHTML = `
             <h2>Registrera dig</h2> 
-            <input id="newInputUserName" type="text" placeholder="Användarnamn"> 
-            <input id="newInputPassword" type="text" placeholder="Lösenord"> 
-            <button id="btnNewAccount">Skapa konto</button>
+            <input id="registerUserName" type="text" placeholder="Användarnamn"> 
+            <input id="registerPassword" type="text" placeholder="Lösenord"> 
+            <button id="btnRegister">Registrera dig</button>
         `;
-        btnCreateAccount();
+        register();
     });
 };
 
-function printStartPage() {
-    login();
-    main.innerHTML = "<h2>Välkommen!</h2>";
+function register() {
+    const btnRegister = document.getElementById("btnRegister");
 
-    let rightPassword = false; 
-    btnSend.addEventListener("click", function () {
+    btnRegister.addEventListener("click", function () {
+        let registerUserName = document.getElementById("registerUserName").value;
+        let registerPassword = document.getElementById("registerPassword").value;
+        // console.log(registerUserName);
+        // console.log(registerPassword);
+
+        let getUserList = JSON.parse(localStorage.getItem("userList"));
+        console.log(getUserList);
+
+        // //ny array med nytt namn+lösen
+        let newUser= {userName: registerUserName, password: registerPassword};
+        // console.log(newUser, "new user");
+        getUserList.push(newUser);
+        // console.log("getUserList after push newUser", getUserList);
+        localStorage.setItem("userList", JSON.stringify(getUserList));
+
         divRegisterHeader.innerHTML = "";
-        let inputUserName = document.getElementById("inputUserName").value;
-        console.log("klick btnSend");
-        // console.log(inputUserName);
-        let inputPassword = document.getElementById("inputPassword").value;
-        // console.log(inputPassword);
-        const btnSend = document.getElementById("btnSend");
-        
-        //Kolla inloggningen mot senaste datan från localStorage:
-        //hämtar senaste versionen av "JSON arrayen" från localStorage
-        let getNewUserList = JSON.parse(localStorage.getItem("userList"));
-        console.log(getNewUserList); 
-
-        //lägger till
-        let fullList = userList.concat(getNewUserList); //OBS måste ta bort dubbletter sen
-        console.log(userList);
-        console.log(fullList);
-
-        //logincheck 
-        for (i=0; i < fullList.length; i++) {
-            // console.log(fullList[i].userName);
-            // console.log(fullList[i].password);
-            // console.log(fullList, "uppdaterad old userList innifrån forloope");
-
-            let userNames = fullList[i].userName; // OBS blir felmeddelande om jag skriver in fel namn vid login: Uncaught TypeError: Cannot read property 'userName' of null at HTMLButtonElement.<anonymous> (script.js:109)
-            
-            let userPasswords = fullList[i].password;
-
-            if (inputUserName === fullList[i].userName && inputPassword === fullList[i].password ) {
-                rightPassword = true;
-                console.log("visa inloggade vyn");
-                //om lyckad inlogg sparas userName i localStorage. Det som reglerar inloggad eller utloggad vy.
-                localStorage.setItem("userName", JSON.stringify(userNames));
-                printUserPage();
-                break;
-            } else {
-                errorMess();
-            };
-        };
     });
-   printCreateAccount();
-};
-
-function login() {
-    divInputHeader.innerHTML = `        
-        <section>
-            <h2>Logga in</h2> 
-            <input id="inputUserName" type="text" placeholder="Användarnamn"> 
-            <input id="inputPassword" type="text" placeholder="Lösenord"> 
-            <button id="btnSend">Skicka</button>
-            <div id="errorMess"></div>
-            <div id=btnContainer>
-                <button id="btnRegister">Ny användare</button>
-            </div>
-        </section>
-    `;
-};
-
-function errorMess() {
-    let errorMess = document.getElementById("errorMess");
-    errorMess.innerHTML = "Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.";
 };
 // ************************************************************************************
 // ************************************ /START PAGE  **********************************
@@ -163,10 +147,11 @@ function errorMess() {
 // ************************************ USER PAGE  ************************************
 // ************************************************************************************
 function printUserPage() {
-    divInputHeader.innerHTML = `<button id="btnLogOut">Logga ut</button>`;
+    divLoginHeader.innerHTML = `<button id="btnLogOut">Logga ut</button>`;
     main.innerHTML = `
-    <h2>Välkommen ${localStorage.getItem("userName")} till din personliga sida!</h2> 
-    <p>Här kan du se dina grejer.</p>`;
+        <h2>Välkommen ${localStorage.getItem("userName")} till din personliga sida!</h2> 
+        <p>Här kan du se dina grejer.</p>
+    `;
     logout();
 };
 
