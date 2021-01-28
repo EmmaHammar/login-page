@@ -8,7 +8,6 @@ const divLoginHeader = document.createElement("DIV");
 header.appendChild(divLoginHeader);
 const divRegisterHeader = document.createElement("DIV");
 header.appendChild(divRegisterHeader);
-// console.log(divLoginHeader);
 
 let userList = [ 
     {userName: "janne", password: "test"},
@@ -16,7 +15,7 @@ let userList = [
     {userName: "olle", password: "test3"}
 ];
 
-//Om userList i localStorage är tom när sidan laddas så sparas userList-arrayen till localStorage( men bara då för annars skriver jag över ev nya användare)
+//Om userList i localStorage är tom sparas userList dit (ej skriva över ev nya användare)
 if (JSON.parse(localStorage.getItem("userList")) === null) {
     console.log("userList ursprung sparas i localStorage");
     localStorage.setItem("userList", JSON.stringify(userList));
@@ -44,27 +43,21 @@ function printStartPage() {
     btnLogin.addEventListener("click", function () {
         divRegisterHeader.innerHTML = "";
         let valueUserName = document.getElementById("inputUserName").value;
-        console.log("klick btnLogin");
-        // console.log("valueUserName", valueUserName);
         let valuePassword = document.getElementById("inputPassword").value;
-        // console.log("valuePassword", valuePassword);
         
-        //Kolla inloggningen mot senaste datan från localStorage:
-        //hämtar senaste versionen av "JSON arrayen" från localStorage
+        //hämtar senaste "JSON arrayen" userList 
         let updatedUserList = JSON.parse(localStorage.getItem("userList"));
-        console.log(updatedUserList); 
 
         //logincheck 
         for (i=0; i < updatedUserList.length; i++) {
-            // console.log("updatedUserList[i].userName", updatedUserList[i].userName);
 
             let userNames = updatedUserList[i].userName; 
             let userPasswords = updatedUserList[i].password;
 
             if (valueUserName === userNames && valuePassword === userPasswords ) {
                 loginOk = true;
-                console.log("loginOK = true, visa inloggade vyn");
-                //om loginOk sparas key: userName i localStorage (reglerar vy startPage eller userPage)
+                
+                //om loginOk sparas key userName (reglerar vy startPage eller userPage)
                 localStorage.setItem("userName", JSON.stringify(userNames));
                 printUserPage();
                 break;
@@ -84,7 +77,7 @@ function login() {
             <input id="inputPassword" type="text" placeholder="Lösenord"> 
             <button id="btnLogin">Logga in</button>
             <div id="errorDiv"></div>
-            <div id=btnContainer>
+            <div id="btnContainer" class="btnContainer">
                 <button id="btnPrintRegisterDiv">Gå till registrering</button>
             </div>
         </section>
@@ -104,7 +97,6 @@ function printRegisterDiv() {
     btnPrintRegisterDiv.addEventListener("click", function () {
         console.log("klick gå till registrering");
         
-        //vill att btnContainer ska bli tom: 
         btnContainer.innerHTML = "";
 
         divRegisterHeader.innerHTML = `
@@ -123,17 +115,17 @@ function register() {
     btnRegister.addEventListener("click", function () {
         let registerUserName = document.getElementById("registerUserName").value;
         let registerPassword = document.getElementById("registerPassword").value;
-        // console.log(registerUserName);
-        // console.log(registerPassword);
-
+        
+        // hämtar senaste versionen userList
         let getUserList = JSON.parse(localStorage.getItem("userList"));
-        console.log(getUserList);
 
-        // //ny array med nytt namn+lösen
+        // ny array med nytt namn+lösen
         let newUser= {userName: registerUserName, password: registerPassword};
-        // console.log(newUser, "new user");
+        
+        //pushar nya medlemmen in i senaste versionen av userList
         getUserList.push(newUser);
-        // console.log("getUserList after push newUser", getUserList);
+
+        //sparar nya versionen av userList
         localStorage.setItem("userList", JSON.stringify(getUserList));
 
         divRegisterHeader.innerHTML = "";
@@ -158,7 +150,6 @@ function printUserPage() {
 function logout() {
     const btnLogOut = document.getElementById("btnLogOut");
     btnLogOut.addEventListener("click", function () {
-        console.log("klick logga ut");
         localStorage.removeItem("userName"); //så finns nya användare med men i annan nyckel
         location.reload(); 
         printStartPage();

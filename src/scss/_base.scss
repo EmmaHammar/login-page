@@ -5,6 +5,11 @@ header {
     justify-content: space-around;
     align-items: center;
     background-color: #aab4b699;
+    padding-bottom: 1rem;
+
+    .btnContainer {
+        margin-top: 2px;
+    }
 }
 
 main {
@@ -22,5 +27,3 @@ footer {
     bottom: 0;
     width: 100%;
 }
-
-
