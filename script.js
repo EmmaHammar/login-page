@@ -11,6 +11,7 @@ header.appendChild(divRegisterHeader);
 if (localStorage.getItem("userName") === null) {
     console.log("ingen är inloggad");
     printStartPage();
+
 } else {
     console.log("någon är inloggad");
     printUserPage();
@@ -19,13 +20,55 @@ if (localStorage.getItem("userName") === null) {
 let userList = [ 
     {userName: "janne", password: "test"},
     {userName: "emma", password: "test2"},
-    {userName: "olle", password: "test3"},
+    {userName: "olle", password: "test3"}
 ];
+
+function btnCreateAccount() {
+    const btnNewAccount = document.getElementById("btnNewAccount");
+
+    btnNewAccount.addEventListener("click", function () {
+        let newInputUserName = document.getElementById("newInputUserName").value;
+        let newInputPassword = document.getElementById("newInputPassword").value;
+        console.log(newInputUserName);
+        console.log(newInputPassword);
+
+        //ny array med nytt namn+lösen
+        let newUser= [{userName: newInputUserName, password: newInputPassword}];
+        console.log(newUser, "new user");
+        
+        if (localStorage.getItem("userList") === null) {
+            console.log("UserList TOM lägger vi till o sparar");
+            
+            // userList.push(newUser);
+            // console.log("efter push newUser", userlist);
+            localStorage.setItem("userList", JSON.stringify(newUser));
+            console.log("userlist om userlist tom");
+        
+            
+        } else {
+            console.log("UserList FINNS hämtar, lägger till o sparar");
+
+            //hämta
+            let getFirstNewUser = JSON.parse(localStorage.getItem("userList"));
+
+            //ändra
+            console.log("första nya användaren ", getFirstNewUser); 
+            console.log("andra nya användaren", newUser); 
+            let allNewUsers = newUser.concat(getFirstNewUser);
+            console.log(allNewUsers);
+
+            //spara
+            localStorage.setItem("userList", JSON.stringify(allNewUsers));
+            };
+
+        divRegisterHeader.innerHTML = "";
+    });
+}
 
 // ************************************************************************************
 // ************************************ START PAGE  ***********************************
 // ************************************************************************************
-function createNewAccount() {
+function printCreateAccount() {
     const btnRegister = document.getElementById("btnRegister");
 
     btnRegister.addEventListener("click", function () {
@@ -40,35 +83,7 @@ function createNewAccount() {
             <input id="newInputPassword" type="text" placeholder="Lösenord"> 
             <button id="btnNewAccount">Skapa konto</button>
         `;
-
-        const btnNewAccount = document.getElementById("btnNewAccount");
-
-        btnNewAccount.addEventListener("click", function () {
-            console.log("klick create new account");
-
-            let newInputUserName = document.getElementById("newInputUserName").value;
-            let newInputPassword = document.getElementById("newInputPassword").value;
-            console.log(newInputUserName);
-            console.log(newInputPassword);
-
-            let newUserList = {userName: newInputUserName, password: newInputPassword};
-            console.log(newUserList, "new userList");
-
-            let newUsersList = userList.concat(newUserList);
-            console.log(newUsersList);
-
-            //deklarerar ny variabel/array och hämtar userList från localStorage. Ex kan en ny användare ha reggat sig så behöver hämta det.
-            // let getUserList = JSON.parse(localStorage.getItem("userList")); 
-            // console.log(getUserList);
-            
-            localStorage.setItem("userList", JSON.stringify(newUsersList));
-
-            // getUserList.push(resultList); //uppdaterar listan från localStorage med nytt namn //FÅR ERROR Uncaught TypeError: Cannot read property 'push' of null at HTMLButtonElement.<anonymous> 
-            // console.log(getUserList);
-            //Sparar nya listan med nytt namn i localStorage
-            // localStorage.setItem("userList", JSON.stringify(getUserList));
-            divRegisterHeader.innerHTML = "";
-        });
+        btnCreateAccount();
     });
 };
 
@@ -86,11 +101,17 @@ function printStartPage() {
         // console.log(inputPassword);
         const btnSend = document.getElementById("btnSend");
         
+        //Kolla inloggningen mot senaste datan från localStorage:
+        //hämtar senaste versionen av "JSON arrayen" från localStorage
         let getNewUserList = JSON.parse(localStorage.getItem("userList"));
-        console.log(getNewUserList);
+        console.log(getNewUserList); 
+
+        //lägger till
         let fullList = userList.concat(getNewUserList); //OBS måste ta bort dubbletter sen
         console.log(userList);
         console.log(fullList);
+
+        //logincheck 
         for (i=0; i < fullList.length; i++) {
             // console.log(fullList[i].userName);
             // console.log(fullList[i].password);
@@ -112,7 +133,7 @@ function printStartPage() {
             };
         };
     });
-   createNewAccount();
+   printCreateAccount();
 };
 
 function login() {
