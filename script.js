@@ -78,6 +78,7 @@ function printStartPage() {
 
     let rightPassword = false; 
     btnSend.addEventListener("click", function () {
+        divRegisterHeader.innerHTML = "";
         let inputUserName = document.getElementById("inputUserName").value;
         console.log("klick btnSend");
         // console.log(inputUserName);
