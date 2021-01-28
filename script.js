@@ -1,9 +1,15 @@
 // ************************************************************************************
 // ************************************ GLOBAL      ***********************************
 // ************************************************************************************
-const main = document.getElementsByTagName("MAIN")[0];
+const body = document.getElementsByTagName("BODY")[0];
+const header = document.createElement("HEADER");
+const main = document.createElement("main");
 main.id = "main";
-const header = document.getElementsByTagName("HEADER")[0];
+
+body.insertAdjacentElement("afterbegin", main);
+body.insertAdjacentElement("afterbegin", header);
+header.insertAdjacentHTML("afterbegin", "<h1>Logo</h1>");
+
 const divLoginHeader = document.createElement("DIV");
 header.appendChild(divLoginHeader);
 const divRegisterHeader = document.createElement("DIV");
