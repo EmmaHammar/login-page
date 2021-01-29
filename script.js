@@ -92,9 +92,7 @@ function login() {
 
 function errorDiv() {
     let errorDiv = document.getElementById("errorDiv");
-    errorDiv.innerHTML = `
-        Error, vänligen kontrollera att du skrivit rätt användarnamn och lösenord.
-    `;
+    errorDiv.innerHTML = `<br><p>Du har fyllt i fel användarnamn eller lösenord, försök igen.</p>`;
 };
 
 function printRegisterDiv() {
@@ -128,13 +126,20 @@ function register() {
         // ny array med nytt namn+lösen
         let newUser= {userName: registerUserName, password: registerPassword};
         
-        //pushar nya medlemmen in i senaste versionen av userList
-        getUserList.push(newUser);
+        //endast om det finns något i fältet, dvs det är true (annars error)
+        if (registerUserName && registerPassword) {
+            console.log("jaa, du har fyllt i ett användarnamn och ett lösenord");
 
-        //sparar nya versionen av userList
-        localStorage.setItem("userList", JSON.stringify(getUserList));
+            //pushar nya medlemmen in i senaste versionen av userList
+            getUserList.push(newUser);
 
-        divRegisterHeader.innerHTML = "";
+            //sparar nya versionen av userList
+            localStorage.setItem("userList", JSON.stringify(getUserList));
+            divRegisterHeader.innerHTML = "";
+        } else {
+            console.log("error, du måste fylla i ett användarnamn och lösenord");
+            divRegisterHeader.insertAdjacentHTML("beforeend","<br><p>Vänligen, fyll i ett användarnamn och ett lösenord</p>")
+        }
     });
 };
 // ************************************************************************************
