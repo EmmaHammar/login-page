@@ -64,7 +64,7 @@ function printStartPage() {
                 loginOk = true;
                 
                 //om loginOk sparas key userName (reglerar vy startPage eller userPage)
-                localStorage.setItem("userName", JSON.stringify(userNames));
+                localStorage.setItem("userName", userNames);
                 printUserPage();
                 break;
             } else {
@@ -101,6 +101,9 @@ function printRegisterDiv() {
     btnPrintRegisterDiv.addEventListener("click", function () {
         console.log("klick gå till registrering");
         
+        let errorDiv = document.getElementById("errorDiv");
+        errorDiv.innerHTML = "";
+
         btnContainer.innerHTML = "";
 
         divRegisterHeader.innerHTML = `
